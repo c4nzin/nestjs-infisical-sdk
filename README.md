@@ -1,3 +1,5 @@
+![infisical](https://github.com/user-attachments/assets/28e5832d-5212-4568-9f90-3b05ca49249a)
+
 # NestJS Infisical SDK
 
 This project provides a NestJS module for integrating with the Infisical SDK, allowing users to manage secrets easily within their applications.
