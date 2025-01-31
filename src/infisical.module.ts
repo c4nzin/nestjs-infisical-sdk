@@ -1,7 +1,6 @@
 import { Module, DynamicModule, Provider } from "@nestjs/common";
-import { InfisicalService } from "./infisical.service";
-import { InfisicalOptions } from "./interfaces/infisical-options.interface";
 import { InfisicalSDK } from "@infisical/sdk";
+import { InfisicalOptions } from "./interfaces/infisical-options.interface";
 import { INFISICAL_OPTIONS } from "./constants";
 
 @Module({})
@@ -29,9 +28,8 @@ export class InfisicalModule {
           provide: InfisicalSDK,
           useValue: client,
         },
-        InfisicalService,
       ],
-      exports: [InfisicalService],
+      exports: [InfisicalSDK],
     };
   }
 
@@ -67,8 +65,8 @@ export class InfisicalModule {
 
     return {
       module: InfisicalModule,
-      providers: [...asyncProviders, InfisicalService],
-      exports: [InfisicalService],
+      providers: [...asyncProviders],
+      exports: [InfisicalSDK],
     };
   }
 }

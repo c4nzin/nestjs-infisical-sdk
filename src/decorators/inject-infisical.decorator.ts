@@ -1,4 +1,4 @@
+import { InfisicalSDK } from "@infisical/sdk";
 import { Inject } from "@nestjs/common";
-import { InfisicalService } from "../infisical.service";
 
-export const InjectInfisical = () => Inject(InfisicalService);
+export const InjectInfisical = () => Inject(InfisicalSDK);

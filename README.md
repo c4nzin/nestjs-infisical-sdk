@@ -25,7 +25,6 @@ import { InfisicalModule } from "nestjs-infisical-sdk";
     InfisicalModule.register({
       clientId: "your-client-id",
       clientSecret: "your-client-secret",
-      projectId: "your-project-id",
       siteUrl: "https://app.infisical.com", // Optional
     }),
   ],
@@ -38,7 +37,7 @@ export class AppModule {}
 ```typescript
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { InfisicalModule } from "nestjs-infisical";
+import { InfisicalModule } from "nestjs-infisical-sdk";
 
 @Module({
   imports: [
@@ -47,7 +46,6 @@ import { InfisicalModule } from "nestjs-infisical";
       useFactory: async (configService: ConfigService) => ({
         clientId: configService.get<string>("INFISICAL_CLIENT_ID"),
         clientSecret: configService.get<string>("INFISICAL_CLIENT_SECRET"),
-        projectId: configService.get<string>("INFISICAL_PROJECT_ID"),
         siteUrl: configService.get<string>("INFISICAL_SITE_URL"), // Optional
       }),
       inject: [ConfigService],
@@ -61,23 +59,34 @@ export class AppModule {}
 
 ```typescript
 import { Injectable } from "@nestjs/common";
-import { InjectInfisical, InfisicalService } from "nestjs-infisical-sdk";
+import { InjectInfisical, InfisicalSDK } from "nestjs-infisical-sdk";
 
 @Injectable()
 export class SomeService {
-  constructor(
-    @InjectInfisical() private readonly infisicalService: InfisicalService
-  ) {}
+  constructor(@InjectInfisical() private readonly infisicalSDK: InfisicalSDK) {}
 
-  async someMethod() {
-    const allSecrets = await this.infisicalService.listSecrets("dev");
+  public async someMethod() {
+    // List all secrets:::::
+    const allSecrets = await this.infisicalSDK.secrets().listSecrets({
+      environment: "dev",
+      projectId: "your-project-id",
+    });
     console.log("Fetched secrets", allSecrets);
 
-    const specificSecret = await this.infisicalService.getSecret(
-      "my-secret",
-      "dev"
+    // Get a specific secret:::
+    const specificSecret = allSecrets.secrets.find(
+      (secret) => secret.secretKey === "my-secret"
     );
-    console.log("Fetched specific secret", specificSecret);
+    console.log("Fetched specific secret", specificSecret?.secretValue);
+
+    // Creating new secret ::::
+    const newSecret = await this.infisicalSDK.secrets().createSecret({
+      environment: "dev",
+      projectId: "your-project-id",
+      secretKey: "new-secret",
+      secretValue: "new-value",
+    });
+    console.log("Created new secret", newSecret);
   }
 }
 ```
