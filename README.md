@@ -12,6 +12,8 @@ To install the package, run:
 npm install nestjs-infisical-sdk
 ```
 
+## Register
+
 ```typescript
 import { Module } from "@nestjs/common";
 import { InfisicalModule } from "nestjs-infisical-sdk";
@@ -28,6 +30,8 @@ import { InfisicalModule } from "nestjs-infisical-sdk";
 })
 export class AppModule {}
 ```
+
+## Async Register
 
 ```typescript
 import { Module } from "@nestjs/common";
