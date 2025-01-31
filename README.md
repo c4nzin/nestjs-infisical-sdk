@@ -29,6 +29,28 @@ import { InfisicalModule } from "nestjs-infisical-sdk";
 export class AppModule {}
 ```
 
+```typescript
+import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { InfisicalModule } from "nestjs-infisical";
+
+@Module({
+  imports: [
+    ConfigModule.forRoot(),
+    InfisicalModule.registerAsync({
+      useFactory: async (configService: ConfigService) => ({
+        clientId: configService.get<string>("INFISICAL_CLIENT_ID"),
+        clientSecret: configService.get<string>("INFISICAL_CLIENT_SECRET"),
+        projectId: configService.get<string>("INFISICAL_PROJECT_ID"),
+        siteUrl: configService.get<string>("INFISICAL_SITE_URL"), // Optional
+      }),
+      inject: [ConfigService],
+    }),
+  ],
+})
+export class AppModule {}
+```
+
 ## Inject The Service
 
 ```typescript

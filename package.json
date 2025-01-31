@@ -1,6 +1,6 @@
 {
   "name": "nestjs-infisical-sdk",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A NestJS module for Infisical SDK",
   "author": "CANMERTINYO",
   "license": "MIT",
@@ -24,5 +24,13 @@
   "peerDependencies": {
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0"
-  }
+  },
+  "keywords": [
+    "nestjs",
+    "infisical",
+    "sdk",
+    "secrets",
+    "configuration",
+    "module"
+  ]
 }
