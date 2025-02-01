@@ -14,6 +14,52 @@ To install the package, run:
 npm install nestjs-infisical-sdk
 ```
 
+## Options
+
+```typescript
+interface InfisicalOptions {
+  /**
+   * The client ID of your Machine Identity.
+   */
+  clientId: string;
+
+  /**
+   * The client secret of your Machine Identity.
+   */
+  clientSecret: string;
+
+  /**
+   * The environment in which to operate (e.g., "dev", "stg", "prod").
+   */
+  environment?: string;
+
+  /**
+   * The site URL for your Infisical instance. Defaults to "https://app.infisical.com".
+   */
+  siteUrl?: string;
+
+  /**
+   * Whether to renew the authentication token that is currently set.
+   */
+  renewToken?: boolean;
+
+  /**
+   * Manually set the access token for authentication.
+   */
+  setManuallyAccessToken?: string;
+
+  /**
+   * The ID of your AWS IAM identity for authentication.
+   */
+  awsIamLogin?: string;
+
+  /**
+   * Whether to renew the AWS IAM authentication token that is currently set.
+   */
+  renewAwsIamToken?: boolean;
+}
+```
+
 ## Register
 
 ```typescript
@@ -26,6 +72,11 @@ import { InfisicalModule } from "nestjs-infisical-sdk";
       clientId: "your-client-id",
       clientSecret: "your-client-secret",
       siteUrl: "https://app.infisical.com", // Optional
+      environment: "dev", // Optional
+      renewToken: true, // Optional
+      setManuallyAccessToken: "your-access-token", // Optional
+      awsIamLogin: "your-aws-iam-identity-id", // Optional
+      renewAwsIamToken: true, // Optional
     }),
   ],
 })
@@ -47,6 +98,15 @@ import { InfisicalModule } from "nestjs-infisical-sdk";
         clientId: configService.get<string>("INFISICAL_CLIENT_ID"),
         clientSecret: configService.get<string>("INFISICAL_CLIENT_SECRET"),
         siteUrl: configService.get<string>("INFISICAL_SITE_URL"), // Optional
+        environment: configService.get<string>("INFISICAL_ENVIRONMENT"), // Optional
+        renewToken: configService.get<boolean>("INFISICAL_RENEW_TOKEN"), // Optional
+        setManuallyAccessToken: configService.get<string>(
+          "INFISICAL_ACCESS_TOKEN"
+        ), // Optional
+        awsIamLogin: configService.get<string>("INFISICAL_AWS_IAM_LOGIN"), // Optional
+        renewAwsIamToken: configService.get<boolean>(
+          "INFISICAL_RENEW_AWS_IAM_TOKEN"
+        ), // Optional
       }),
       inject: [ConfigService],
     }),

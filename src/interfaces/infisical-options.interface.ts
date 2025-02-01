@@ -1,6 +1,44 @@
+/**
+ * Options for configuring the Infisical SDK's Behaviour.
+ */
 export interface InfisicalOptions {
+  /**
+   * The client ID of your Machine Identity.
+   */
   clientId: string;
+
+  /**
+   * The client secret of your Machine Identity.
+   */
   clientSecret: string;
+
+  /**
+   * The environment in which to operate (e.g., "dev", "stg", "prod").
+   */
   environment?: string;
+
+  /**
+   * The site URL for your Infisical instance. Defaults to "https://app.infisical.com".
+   */
   siteUrl?: string;
+
+  /**
+   * Whether to renew the authentication token that is currently set.
+   */
+  renewToken?: boolean;
+
+  /**
+   * Manually set the access token for authentication.
+   */
+  setManuallyAccessToken?: string;
+
+  /**
+   * The ID of your AWS IAM identity for authentication.
+   */
+  awsIamLogin?: string;
+
+  /**
+   * Whether to renew the AWS IAM authentication token that is currently set.
+   */
+  renewAwsIamToken?: boolean; // You can renew the authentication token that is currently set by using the renew() method.
 }

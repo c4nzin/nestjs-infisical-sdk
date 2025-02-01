@@ -17,6 +17,24 @@ export class InfisicalModule {
       clientSecret: options.clientSecret,
     });
 
+    if (options.renewToken) {
+      await client.auth().universalAuth.renew();
+    }
+
+    if (options.setManuallyAccessToken) {
+      client.auth().accessToken(options.setManuallyAccessToken);
+    }
+
+    if (options.awsIamLogin) {
+      await client.auth().awsIamAuth.login({
+        identityId: options.awsIamLogin,
+      });
+    }
+
+    if (options.renewAwsIamToken) {
+      await client.auth().awsIamAuth.renew();
+    }
+
     return {
       module: InfisicalModule,
       providers: [
@@ -56,6 +74,24 @@ export class InfisicalModule {
             clientId: infisicalOptions.clientId,
             clientSecret: infisicalOptions.clientSecret,
           });
+
+          if (infisicalOptions.renewToken) {
+            await client.auth().universalAuth.renew();
+          }
+
+          if (infisicalOptions.setManuallyAccessToken) {
+            client.auth().accessToken(infisicalOptions.setManuallyAccessToken);
+          }
+
+          if (infisicalOptions.awsIamLogin) {
+            await client.auth().awsIamAuth.login({
+              identityId: infisicalOptions.awsIamLogin,
+            });
+          }
+
+          if (infisicalOptions.renewAwsIamToken) {
+            await client.auth().awsIamAuth.renew();
+          }
 
           return client;
         },
