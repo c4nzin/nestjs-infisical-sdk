@@ -99,12 +99,12 @@ import { InfisicalModule } from "nestjs-infisical-sdk";
         clientSecret: configService.get<string>("INFISICAL_CLIENT_SECRET"),
         siteUrl: configService.get<string>("INFISICAL_SITE_URL"), // Optional
         environment: configService.get<string>("INFISICAL_ENVIRONMENT"), // Optional
-        renewToken: false // Optional
+        renewToken: false, // Optional
         setManuallyAccessToken: configService.get<string>(
           "INFISICAL_ACCESS_TOKEN"
         ), // Optional
         awsIamLogin: configService.get<string>("INFISICAL_AWS_IAM_LOGIN"), // Optional
-        renewAwsIamToken: false // Optional
+        renewAwsIamToken: false, // Optional
       }),
       inject: [ConfigService],
     }),
