@@ -41,4 +41,25 @@ export interface InfisicalOptions {
    * Whether to renew the AWS IAM authentication token that is currently set.
    */
   renewAwsIamToken?: boolean; // You can renew the authentication token that is currently set by using the renew() method.
+
+   /**
+   * The project ID of your Infisical project.
+   * Used to fetch secrets from the correct project and inject them into `process.env`.
+   */
+  projectId?: string;
+
+  /**
+   * The path within your Infisical project where secrets are stored.
+   * Used to fetch secrets from a specific subpath and inject them into `process.env`.
+   * Defaults to "/".
+   */
+  secretPath?: string;
+
+  /**
+   * Determines whether fetched secrets should be injected into `process.env`.
+   * If `true`, secrets will be automatically set in `process.env`.
+   * If `false`, secrets will only be returned and not modified.
+   * Defaults to `false`.
+   */
+  injectIntoProcessEnv?: boolean;
 }
