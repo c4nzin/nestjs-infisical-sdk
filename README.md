@@ -214,3 +214,8 @@ export class AppService {
   }
 }
 ```
+
+## Example Nest.js Project
+
+Looking for a working example?
+[NestJS Infisical Example](https://github.com/c4nzin/nestjs-infisical-example)
