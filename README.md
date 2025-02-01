@@ -130,6 +130,13 @@ export class AppModule {}
 ```typescript
 import { Injectable } from "@nestjs/common";
 import { InfisicalSDK, InjectInfisical } from "nestjs-infisical-sdk";
+import {
+  ApiV1DashboardSecretsOverviewGet200ResponseSecretsInner,
+  ApiV1DynamicSecretsDelete200Response,
+  ApiV1DynamicSecretsPost200Response,
+  ApiV3SecretsRawGet200Response,
+  ApiV3SecretsRawSecretNameGet200Response,
+} from "nestjs-infisical-sdk";
 
 @Injectable()
 export class AppService {
@@ -137,62 +144,64 @@ export class AppService {
    * Using Infisical SDK with nestjs-infisical-sdk
    */
   constructor(@InjectInfisical() private readonly infisicalSdk: InfisicalSDK) {}
+
   public async someMethod() {
-    //Get secret by Name
-    const getSecret = await this.infisicalSdk.secrets().getSecret({
-      environment: "dev",
-      secretName: "example-key",
-      projectId: "deda1d6c-dbd4-44f9-91cd-dac118dcc18f",
-    });
+    // Get secret by Name
+    const getSecret: ApiV3SecretsRawSecretNameGet200Response =
+      await this.infisicalSdk.secrets().getSecret({
+        environment: "dev",
+        secretName: "example-key",
+        projectId: "deda1d6c-dbd4-44f9-91cd-dac118dcc18f",
+      });
 
     console.log(getSecret, "specific secret");
 
-    //Create secret
-    const createSecret = await this.infisicalSdk
-      .secrets()
-      .createSecret("secretName", {
+    // Create secret
+    const createSecret: ApiV1DynamicSecretsPost200Response =
+      await this.infisicalSdk.secrets().createSecret("secretName", {
         environment: "dev",
         projectId: "deda1d6c-dbd4-44f9-91cd-dac118dcc18f",
         secretValue: "secretValue",
-        secretComment: "this is a secret comment", //Optional field.
-        secretPath: "/foo/bar", //Optional field.
-        secretReminderNote: "this is a reminder note", //Optional field.
-        secretReminderRepeatDays: 7, //Optional field.
-        skipMultilineEncoding: false, //Optional field.
-        tagIds: ["tagId1", "tagId2"], //Optional field.
-        type: "personal", //Optional field.
+        secretComment: "this is a secret comment", // Optional field.
+        secretPath: "/foo/bar", // Optional field.
+        secretReminderNote: "this is a reminder note", // Optional field.
+        secretReminderRepeatDays: 7, // Optional field.
+        skipMultilineEncoding: false, // Optional field.
+        tagIds: ["tagId1", "tagId2"], // Optional field.
+        type: "personal", // Optional field.
       });
 
     console.log(createSecret, "created secret");
 
-    //list all secrets
-    const listSecrets = await this.infisicalSdk.secrets().listSecrets({
-      environment: "dev",
-      projectId: "deda1d6c-dbd4-44f9-91cd-dac118dcc18f",
-      expandSecretReferences: true, //Optional field.
-      includeImports: false, //Optional field.
-      recursive: false, //Optional field.
-    });
+    // List all secrets
+    const listSecrets: ApiV3SecretsRawGet200Response = await this.infisicalSdk
+      .secrets()
+      .listSecrets({
+        environment: "dev",
+        projectId: "deda1d6c-dbd4-44f9-91cd-dac118dcc18f",
+        expandSecretReferences: true, // Optional field.
+        includeImports: false, // Optional field.
+        recursive: false, // Optional field.
+      });
 
     console.log(listSecrets, "list secrets");
 
-    //update secret
-    const updateSecret = await this.infisicalSdk
-      .secrets()
-      .updateSecret("secretName", {
+    // Update secret
+    const updateSecret: ApiV1DashboardSecretsOverviewGet200ResponseSecretsInner =
+      await this.infisicalSdk.secrets().updateSecret("secretName", {
         environment: "dev",
         projectId: "deda1d6c-dbd4-44f9-91cd-dac118dcc18f",
         secretValue: "updated_secret_value",
-        newSecretName: "new_secret_name", //Optional field.
-        secretComment: "this is a secret comment", //Optional field.
-        secretPath: "/foo/bar", //Optional field.
-        secretReminderNote: "this is a reminder note", //Optional field.
-        secretReminderRepeatDays: 7, //Optional field.
-        skipMultilineEncoding: false, //Optional field.
-        tagIds: ["tagId1", "tagId2"], //Optional field.
-        type: "personal", //Optional field.
+        newSecretName: "new_secret_name", // Optional field.
+        secretComment: "this is a secret comment", // Optional field.
+        secretPath: "/foo/bar", // Optional field.
+        secretReminderNote: "this is a reminder note", // Optional field.
+        secretReminderRepeatDays: 7, // Optional field.
+        skipMultilineEncoding: false, // Optional field.
+        tagIds: ["tagId1", "tagId2"], // Optional field.
+        type: "personal", // Optional field.
         metadata: {
-          //Optional field.
+          // Optional field.
           key1: "value1",
           key2: "value2",
         },
@@ -200,14 +209,13 @@ export class AppService {
 
     console.log(updateSecret, "updated secret");
 
-    //delete secret.
-    const deleteSecret = await this.infisicalSdk
-      .secrets()
-      .deleteSecret("secret-name", {
+    // Delete secret
+    const deleteSecret: ApiV1DynamicSecretsDelete200Response =
+      await this.infisicalSdk.secrets().deleteSecret("secret-name", {
         environment: "dev",
         projectId: "deda1d6c-dbd4-44f9-91cd-dac118dcc18f",
-        secretPath: "/foo/bar", //Optional field.
-        type: "personal", //Optional field.
+        secretPath: "/foo/bar", // Optional field.
+        type: "personal", // Optional field.
       });
 
     console.log(deleteSecret, "deleted secret");
