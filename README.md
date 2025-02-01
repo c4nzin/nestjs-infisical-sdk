@@ -128,97 +128,127 @@ export class AppModule {}
 ## Inject The Service
 
 ```typescript
-import { Injectable } from "@nestjs/common";
-import { InfisicalSDK, InjectInfisical } from "nestjs-infisical-sdk";
+import { Injectable, Logger } from "@nestjs/common";
 import {
-  ApiV1DashboardSecretsOverviewGet200ResponseSecretsInner,
   ApiV1DynamicSecretsDelete200Response,
   ApiV1DynamicSecretsPost200Response,
   ApiV3SecretsRawGet200Response,
   ApiV3SecretsRawSecretNameGet200Response,
+  ApiV3SecretsRawSecretNamePost200Response,
+  DynamicSecretProviders,
+  InfisicalSDK,
+  InjectInfisical,
 } from "nestjs-infisical-sdk";
 
 @Injectable()
 export class AppService {
-  /**
-   * Using Infisical SDK with nestjs-infisical-sdk
-   */
+  private readonly logger = new Logger(AppService.name);
+
   constructor(@InjectInfisical() private readonly infisicalSdk: InfisicalSDK) {}
 
-  public async someMethod() {
-    // Get secret by Name
-    const getSecret: ApiV3SecretsRawSecretNameGet200Response =
-      await this.infisicalSdk.secrets().getSecret({
-        environment: "dev",
-        secretName: "example-key",
-        projectId: "deda1d6c-dbd4-44f9-91cd-dac118dcc18f",
-      });
+  public async getSecret(
+    secretName: string
+  ): Promise<ApiV3SecretsRawSecretNameGet200Response["secret"]> {
+    this.logger.log(`Getting secret: ${secretName}`);
+    const secretResponse = await this.infisicalSdk.secrets().getSecret({
+      environment: "dev",
+      secretName,
+      projectId: process.env.INFISICAL_PROJECT_ID,
+    });
+    this.logger.log(`Secret retrieved: ${JSON.stringify(secretResponse)}`);
+    return secretResponse;
+  }
 
-    console.log(getSecret, "specific secret");
+  public async createSecret(
+    secretName: string,
+    secretValue: string
+  ): Promise<ApiV3SecretsRawSecretNamePost200Response> {
+    this.logger.log(`Creating secret: ${secretName}`);
+    const secret = await this.infisicalSdk.secrets().createSecret(secretName, {
+      environment: "dev",
+      secretValue,
+      projectId: process.env.INFISICAL_PROJECT_ID,
+    });
+    this.logger.log(`Secret created: ${JSON.stringify(secret)}`);
+    return secret;
+  }
 
-    // Create secret
-    const createSecret: ApiV1DynamicSecretsPost200Response =
-      await this.infisicalSdk.secrets().createSecret("secretName", {
-        environment: "dev",
-        projectId: "deda1d6c-dbd4-44f9-91cd-dac118dcc18f",
-        secretValue: "secretValue",
-        secretComment: "this is a secret comment", // Optional field.
-        secretPath: "/foo/bar", // Optional field.
-        secretReminderNote: "this is a reminder note", // Optional field.
-        secretReminderRepeatDays: 7, // Optional field.
-        skipMultilineEncoding: false, // Optional field.
-        tagIds: ["tagId1", "tagId2"], // Optional field.
-        type: "personal", // Optional field.
-      });
+  public async updateSecret(
+    secretName: string,
+    secretValue: string
+  ): Promise<ApiV3SecretsRawSecretNamePost200Response> {
+    this.logger.log(`Updating secret: ${secretName}`);
+    const secret = await this.infisicalSdk.secrets().updateSecret(secretName, {
+      environment: "dev",
+      secretValue,
+      projectId: process.env.INFISICAL_PROJECT_ID,
+    });
+    this.logger.log(`Secret updated: ${JSON.stringify(secret)}`);
+    return secret;
+  }
 
-    console.log(createSecret, "created secret");
+  public async deleteSecret(
+    secretName: string
+  ): Promise<ApiV3SecretsRawSecretNamePost200Response> {
+    this.logger.log(`Deleting secret: ${secretName}`);
+    const secret = await this.infisicalSdk.secrets().deleteSecret(secretName, {
+      environment: "dev",
+      projectId: process.env.INFISICAL_PROJECT_ID,
+    });
+    this.logger.log(`Secret deleted: ${JSON.stringify(secret)}`);
+    return secret;
+  }
 
-    // List all secrets
-    const listSecrets: ApiV3SecretsRawGet200Response = await this.infisicalSdk
-      .secrets()
-      .listSecrets({
-        environment: "dev",
-        projectId: "deda1d6c-dbd4-44f9-91cd-dac118dcc18f",
-        expandSecretReferences: true, // Optional field.
-        includeImports: false, // Optional field.
-        recursive: false, // Optional field.
-      });
+  public async listSecrets(): Promise<ApiV3SecretsRawGet200Response> {
+    this.logger.log("Listing secrets");
+    const secrets = await this.infisicalSdk.secrets().listSecrets({
+      environment: "dev",
+      projectId: process.env.INFISICAL_PROJECT_ID,
+    });
+    this.logger.log(`Secrets listed: ${JSON.stringify(secrets)}`);
+    return secrets;
+  }
 
-    console.log(listSecrets, "list secrets");
-
-    // Update secret
-    const updateSecret: ApiV1DashboardSecretsOverviewGet200ResponseSecretsInner =
-      await this.infisicalSdk.secrets().updateSecret("secretName", {
-        environment: "dev",
-        projectId: "deda1d6c-dbd4-44f9-91cd-dac118dcc18f",
-        secretValue: "updated_secret_value",
-        newSecretName: "new_secret_name", // Optional field.
-        secretComment: "this is a secret comment", // Optional field.
-        secretPath: "/foo/bar", // Optional field.
-        secretReminderNote: "this is a reminder note", // Optional field.
-        secretReminderRepeatDays: 7, // Optional field.
-        skipMultilineEncoding: false, // Optional field.
-        tagIds: ["tagId1", "tagId2"], // Optional field.
-        type: "personal", // Optional field.
-        metadata: {
-          // Optional field.
-          key1: "value1",
-          key2: "value2",
+  public async createDynamicSecret(): Promise<
+    ApiV1DynamicSecretsPost200Response["dynamicSecret"]
+  > {
+    const createDynamicSecret = await this.infisicalSdk
+      .dynamicSecrets()
+      .create({
+        provider: {
+          type: DynamicSecretProviders.Redis,
+          inputs: {
+            host: "localhost",
+            port: 6379,
+            username: "user1",
+            password: "12345612356",
+            creationStatement: `ACL SETUSER {{user1}} on >{{123456123456}} ~* &* +@all`,
+            revocationStatement: `ACL DELUSER {{user1}}`,
+          },
         },
+        defaultTTL: "1h",
+        environmentSlug: "dev",
+        name: "dynamic-secret-name",
+        projectSlug: "project-slug",
       });
 
-    console.log(updateSecret, "updated secret");
+    this.logger.log(
+      `Dynamic secret created: ${JSON.stringify(createDynamicSecret)}`
+    );
+    return createDynamicSecret;
+  }
 
-    // Delete secret
-    const deleteSecret: ApiV1DynamicSecretsDelete200Response =
-      await this.infisicalSdk.secrets().deleteSecret("secret-name", {
-        environment: "dev",
-        projectId: "deda1d6c-dbd4-44f9-91cd-dac118dcc18f",
-        secretPath: "/foo/bar", // Optional field.
-        type: "personal", // Optional field.
+  public async deleteDynamicSecret(
+    dynamicSecretName: string
+  ): Promise<ApiV1DynamicSecretsDelete200Response["dynamicSecret"]> {
+    const deleteDynamicSecret = await this.infisicalSdk
+      .dynamicSecrets()
+      .delete(dynamicSecretName, {
+        environmentSlug: "dev",
+        projectSlug: "project-slug",
       });
 
-    console.log(deleteSecret, "deleted secret");
+    return deleteDynamicSecret;
   }
 }
 ```
