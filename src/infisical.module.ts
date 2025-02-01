@@ -9,25 +9,32 @@ export class InfisicalModule {
     options: InfisicalOptions
   ): Promise<DynamicModule> {
     const client = new InfisicalSDK({
-      siteUrl: options.siteUrl || "https://app.infisical.com",
+      siteUrl:
+        options.siteUrl ||
+        process.env.INFISICAL_SITE_URL ||
+        "https://app.infisical.com",
     });
 
     await client.auth().universalAuth.login({
-      clientId: options.clientId,
-      clientSecret: options.clientSecret,
+      clientId: options.clientId || process.env.INFISICAL_CLIENT_ID,
+      clientSecret: options.clientSecret || process.env.INFISICAL_CLIENT_SECRET,
     });
 
-    if (options.renewToken) {
+    if (options.renewToken || process.env.INFISICAL_RENEW_TOKEN === "true") {
       await client.auth().universalAuth.renew();
     }
 
     if (options.setManuallyAccessToken) {
-      client.auth().accessToken(options.setManuallyAccessToken);
+      client
+        .auth()
+        .accessToken(
+          options.setManuallyAccessToken || process.env.INFISICAL_ACCESS_TOKEN
+        );
     }
 
     if (options.awsIamLogin) {
       await client.auth().awsIamAuth.login({
-        identityId: options.awsIamLogin,
+        identityId: options.awsIamLogin || process.env.INFISICAL_AWS_IAM_LOGIN,
       });
     }
 
@@ -67,12 +74,18 @@ export class InfisicalModule {
         provide: InfisicalSDK,
         useFactory: async (infisicalOptions: InfisicalOptions) => {
           const client = new InfisicalSDK({
-            siteUrl: infisicalOptions.siteUrl || "https://app.infisical.com",
+            siteUrl:
+              infisicalOptions.siteUrl ||
+              process.env.INFISICAL_SITE_URL ||
+              "https://app.infisical.com",
           });
 
           await client.auth().universalAuth.login({
-            clientId: infisicalOptions.clientId,
-            clientSecret: infisicalOptions.clientSecret,
+            clientId:
+              infisicalOptions.clientId || process.env.INFISICAL_CLIENT_ID,
+            clientSecret:
+              infisicalOptions.clientSecret ||
+              process.env.INFISICAL_CLIENT_SECRET,
           });
 
           if (infisicalOptions.renewToken) {
@@ -80,12 +93,22 @@ export class InfisicalModule {
           }
 
           if (infisicalOptions.setManuallyAccessToken) {
-            client.auth().accessToken(infisicalOptions.setManuallyAccessToken);
+            client
+              .auth()
+              .accessToken(
+                infisicalOptions.setManuallyAccessToken ||
+                  process.env.INFISICAL_ACCESS_TOKEN
+              );
           }
 
-          if (infisicalOptions.awsIamLogin) {
+          if (
+            infisicalOptions.awsIamLogin ||
+            process.env.INFISICAL_AWS_IAM_LOGIN
+          ) {
             await client.auth().awsIamAuth.login({
-              identityId: infisicalOptions.awsIamLogin,
+              identityId:
+                infisicalOptions.awsIamLogin ||
+                process.env.INFISICAL_AWS_IAM_LOGIN,
             });
           }
 

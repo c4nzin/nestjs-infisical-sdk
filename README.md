@@ -14,6 +14,18 @@ To install the package, run:
 npm install nestjs-infisical-sdk
 ```
 
+## Example .env
+
+```bash
+INFISICAL_SITE_URL=https://app.infisical.com
+INFISICAL_CLIENT_ID=your-client-id
+INFISICAL_CLIENT_SECRET=your-client-secret
+INFISICAL_RENEW_TOKEN=true
+INFISICAL_ACCESS_TOKEN=your-access-token
+INFISICAL_AWS_IAM_LOGIN=your-aws-iam-identity-id
+INFISICAL_RENEW_AWS_IAM_TOKEN=true
+```
+
 ## Options
 
 ```typescript
