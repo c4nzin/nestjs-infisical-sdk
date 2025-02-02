@@ -18,9 +18,9 @@ export async function injectSecretsIntoEnv(
     secretPath: options.secretPath || '/'
   });
 
-  if (secretsResult?.secrets?.length) {
-    secretsResult.secrets.forEach((secret) => {
-      process.env[secret.secretKey] = secret.secretValue;
-    });
-  }
+  const secrets = secretsResult?.secrets || [];
+
+  secrets.forEach((secret) => {
+    process.env[secret.secretKey] = secret.secretValue;
+  });
 }
