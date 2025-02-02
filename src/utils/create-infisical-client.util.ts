@@ -11,7 +11,7 @@ export async function createInfisicalClient(options: InfisicalOptions): Promise<
     clientSecret: options.clientSecret || process.env.INFISICAL_CLIENT_SECRET
   });
 
-  if (options.renewToken || process.env.INFISICAL_RENEW_TOKEN === 'true') {
+  if (options.renewToken) {
     await client.auth().universalAuth.renew();
   }
 
