@@ -24,6 +24,19 @@ INFISICAL_ACCESS_TOKEN=your-access-token
 INFISICAL_AWS_IAM_LOGIN=your-aws-iam-identity-id
 ```
 
+| Property                      | Type       | Description |
+|--------------------------------|-----------|-------------|
+| `clientId`                    | `string`  | The client ID of your Machine Identity. |
+| `clientSecret`                | `string`  | The client secret of your Machine Identity. |
+| `environment`                 | `string`  | The environment in which to operate (e.g., "dev", "stg", "prod"). *(Optional)* |
+| `siteUrl`                     | `string`  | The site URL for your Infisical instance. Defaults to `"https://app.infisical.com"`. *(Optional)* |
+| `renewToken`                  | `boolean` | Whether to renew the authentication token that is currently set. *(Optional)* |
+| `setManuallyAccessToken`       | `string`  | Manually set the access token for authentication. *(Optional)* |
+| `awsIamLogin`                 | `string`  | The ID of your AWS IAM identity for authentication. *(Optional)* |
+| `renewAwsIamToken`            | `boolean` | Whether to renew the AWS IAM authentication token that is currently set. *(Optional)* |
+| `injectIntoProcessEnv`        | `boolean` |  Determines fetched secrets should be injected into `process.env`. Defaults to `false`. *(Optional)* |
+
+
 ## Options
 
 ```typescript
@@ -94,7 +107,8 @@ import { InfisicalModule } from "nestjs-infisical-sdk";
       renewToken: true, // Optional
       setManuallyAccessToken: "your-access-token", // Optional
       awsIamLogin: "your-aws-iam-identity-id", // Optional
-      renewAwsIamToken: true, // Optional
+      renewAwsIamToken: true, // Optional,
+      injectIntoProcessEnv : true, // Optional
     }),
   ],
 })
@@ -256,6 +270,10 @@ export class AppService {
 }
 
 ```
+
+
+
+
 
 ## Example Nest.js Project
 
