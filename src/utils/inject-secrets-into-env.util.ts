@@ -20,7 +20,7 @@ export async function injectSecretsIntoEnv(
 
   const secrets = secretsResult?.secrets || [];
 
-  secrets.forEach((secret) => {
+  for (const secret of secrets) {
     process.env[secret.secretKey] = secret.secretValue;
-  });
+  }
 }
