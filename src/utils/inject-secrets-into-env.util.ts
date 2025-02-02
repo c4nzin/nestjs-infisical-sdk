@@ -1,5 +1,5 @@
-import { InfisicalOptions } from 'src/interfaces/infisical-options.interface'
-import { InfisicalSDK } from '@infisical/sdk'
+import { InfisicalOptions } from 'src/interfaces/infisical-options.interface';
+import { InfisicalSDK } from '@infisical/sdk';
 
 export async function injectSecretsIntoEnv(
   client: InfisicalSDK,
@@ -8,7 +8,7 @@ export async function injectSecretsIntoEnv(
   if (!options.projectId) {
     throw new Error(
       'Infisical environment settings are incomplete. Please provide a valid Project ID when enabling the injection of secrets into process.env.'
-    )
+    );
   }
 
   const secretsResult = await client.secrets().listSecrets({
@@ -16,11 +16,11 @@ export async function injectSecretsIntoEnv(
     projectId: options.projectId,
     includeImports: true,
     secretPath: options.secretPath || '/'
-  })
+  });
 
   if (secretsResult?.secrets?.length) {
     secretsResult.secrets.forEach((secret) => {
-      process.env[secret.secretKey] = secret.secretValue
-    })
+      process.env[secret.secretKey] = secret.secretValue;
+    });
   }
 }

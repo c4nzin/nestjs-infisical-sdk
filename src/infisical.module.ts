@@ -1,17 +1,17 @@
-import { Module, DynamicModule, Provider } from '@nestjs/common'
-import { InfisicalSDK } from '@infisical/sdk'
-import { InfisicalOptions } from './interfaces/infisical-options.interface'
-import { INFISICAL_OPTIONS } from './constants'
-import { createInfisicalClient, injectSecretsIntoEnv } from './utils'
-import { ConfigModule } from '@nestjs/config'
+import { Module, DynamicModule, Provider } from '@nestjs/common';
+import { InfisicalSDK } from '@infisical/sdk';
+import { InfisicalOptions } from './interfaces/infisical-options.interface';
+import { INFISICAL_OPTIONS } from './constants';
+import { createInfisicalClient, injectSecretsIntoEnv } from './utils';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({})
 export class InfisicalModule {
   public static async register(options: InfisicalOptions): Promise<DynamicModule> {
-    const client = await createInfisicalClient(options)
+    const client = await createInfisicalClient(options);
 
     if (options.injectIntoProcessEnv) {
-      await injectSecretsIntoEnv(client, options)
+      await injectSecretsIntoEnv(client, options);
     }
 
     return {
@@ -28,12 +28,12 @@ export class InfisicalModule {
         }
       ],
       exports: [InfisicalSDK]
-    }
+    };
   }
 
   public static registerAsync(options: {
-    useFactory: (...args: any[]) => Promise<InfisicalOptions> | InfisicalOptions
-    inject?: any[]
+    useFactory: (...args: any[]) => Promise<InfisicalOptions> | InfisicalOptions;
+    inject?: any[];
   }): DynamicModule {
     const asyncProviders: Provider[] = [
       {
@@ -44,23 +44,23 @@ export class InfisicalModule {
       {
         provide: InfisicalSDK,
         useFactory: async (options: InfisicalOptions): Promise<InfisicalSDK> => {
-          const client = await createInfisicalClient(options)
+          const client = await createInfisicalClient(options);
 
           if (options.injectIntoProcessEnv) {
-            await injectSecretsIntoEnv(client, options)
+            await injectSecretsIntoEnv(client, options);
           }
 
-          return client
+          return client;
         },
         inject: [INFISICAL_OPTIONS]
       }
-    ]
+    ];
 
     return {
       module: InfisicalModule,
       imports: [ConfigModule.forRoot({ ignoreEnvFile: true })],
       providers: asyncProviders,
       exports: [InfisicalSDK]
-    }
+    };
   }
 }
