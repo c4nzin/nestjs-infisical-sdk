@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-          cache: 'pnpm'
+          cache: 'npm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install PNPM
@@ -28,13 +28,13 @@ jobs:
           echo "$(npm bin -g)" >> $GITHUB_PATH
 
       - name: Install Dependencies
-        run: pnpm install
+        run: npm install
 
       - name: Run Lint
-        run: pnpm lint
+        run: npm lint
 
       - name: Run Tests
-        run: pnpm test
+        run: npm test
 
       - name: Commit Message Lint
         uses: wagoid/commitlint-github-action@v4
