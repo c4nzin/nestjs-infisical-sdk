@@ -2,9 +2,11 @@ name: CI Pipeline
 
 on:
   pull_request:
-    branches: [main]
+    branches:
+      - main
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   test-and-lint:
@@ -20,10 +22,10 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
-       - name: Install PNPM
+      - name: Install PNPM
         run: |
-            npm install -g pnpm
-            echo "$(npm bin -g)" >> $GITHUB_PATH
+          npm install -g pnpm
+          echo "$(npm bin -g)" >> $GITHUB_PATH
 
       - name: Install Dependencies
         run: pnpm install
