@@ -28,13 +28,13 @@ jobs:
           echo "$(npm bin -g)" >> $GITHUB_PATH
 
       - name: Install Dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Run Lint
-        run: npm lint
+        run: pnpm lint
 
       - name: Run Tests
-        run: npm test
+        run: pnpm test
 
       - name: Commit Message Lint
         uses: wagoid/commitlint-github-action@v4
