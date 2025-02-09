@@ -7,7 +7,7 @@ export async function injectSecretsIntoEnv(
 ): Promise<void> {
   if (!options.projectId) {
     throw new Error(
-      'Infisical environment settings are incomplete. Please provide a valid Project ID when enabling the injection of secrets into process.env.'
+      'Missing Project ID. Please specify a valid Project ID to enable secrets injection into process.env.'
     );
   }
 
