@@ -1,13 +1,14 @@
 {
   "name": "nestjs-infisical-sdk",
-  "version": "1.2.33",
+  "version": "1.2.37",
   "description": "A NestJS module for Infisical Node SDK",
   "author": "CANMERTINYO",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "pnpm run clean && tsc",
+    "clean": "rm -rf dist",
     "prepublishOnly": "pnpm run build",
     "lint": "eslint --ext .js,.ts .",
     "lint:fix": "eslint --fix --ext .js,.ts .",
