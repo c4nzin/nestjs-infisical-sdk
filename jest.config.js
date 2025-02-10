@@ -12,5 +12,6 @@ module.exports = {
     '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest'
   },
   rootDir: 'test',
-  transformIgnorePatterns: ['node_modules/(?!axios)']
+  extensionsToTreatAsEsm: ['.ts'],
+  transformIgnorePatterns: ['/node_modules/(?!(axios|@infisical/sdk)/)']
 };
