@@ -65,7 +65,7 @@ export interface InfisicalOptions {
 
   /**
    * The path to the environment file to watch for changes.
-   * Defaults to "../.env".
+   * Default is ".env".
    */
   enableFileWatcher?: boolean;
 }
