@@ -12,7 +12,7 @@ export async function createInfisicalClient(options: InfisicalOptions): Promise<
     clientSecret: options.clientSecret || process.env.INFISICAL_CLIENT_SECRET
   });
 
-  if (options.enableFileWatcher) {
+  if (options.watchEnvFile) {
     watchEnviromentFile();
   }
 

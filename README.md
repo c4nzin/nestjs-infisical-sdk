@@ -92,7 +92,7 @@ interface InfisicalOptions {
    * The path to the environment file to watch for changes.
    * Default is ".env".
    */
-  enableFileWatcher?: boolean;
+  watchEnvFile?: boolean;
 }
 ```
 

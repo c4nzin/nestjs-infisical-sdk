@@ -1,6 +1,6 @@
 {
   "name": "nestjs-infisical-sdk",
-  "version": "1.2.40",
+  "version": "1.2.41",
   "description": "A NestJS module for Infisical Node SDK",
   "author": "CANMERTINYO",
   "license": "MIT",
@@ -35,7 +35,6 @@
     "@nestjs/config": "^1.0.0",
     "@nestjs/core": "^8.4.7",
     "@nestjs/platform-express": "^8.0.0",
-    "@types/chokidar": "^2.1.7",
     "chokidar": "^4.0.3",
     "dotenv": "^10.0.0"
   },
@@ -52,6 +51,7 @@
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.4.7",
     "@types/jest": "^27.5.2",
+    "@types/chokidar": "^2.1.7",
     "@types/node": "^16.0.0",
     "@typescript-eslint/eslint-plugin": "^4.0.0",
     "@typescript-eslint/parser": "^4.0.0",
