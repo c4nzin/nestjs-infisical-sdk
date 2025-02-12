@@ -4,12 +4,12 @@ import dotenv from 'dotenv';
 
 const logger = new Logger('InfisicalModule::FileWatcher');
 
-function reloadEnviroment() {
+function reloadEnviroment(): void {
   logger.log('Reloading environment variables...');
   dotenv.config();
 }
 
-export function watchEnviromentFile(envFilePath: string = '.env'): void {
+export function watchEnviromentFile(envFilePath = '.env'): void {
   const watcher = chokidar.watch(envFilePath, {
     persistent: true,
     ignoreInitial: true
