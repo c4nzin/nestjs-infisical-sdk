@@ -62,4 +62,10 @@ export interface InfisicalOptions {
    * Defaults to `false`.
    */
   injectIntoProcessEnv?: boolean;
+
+  /**
+   * The path to the environment file to watch for changes.
+   * Default is ".env".
+   */
+  enableFileWatcher?: boolean;
 }
