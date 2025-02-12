@@ -35,6 +35,8 @@
     "@nestjs/config": "^1.0.0",
     "@nestjs/core": "^8.4.7",
     "@nestjs/platform-express": "^8.0.0",
+    "@types/chokidar": "^2.1.7",
+    "chokidar": "^4.0.3",
     "dotenv": "^10.0.0"
   },
   "devDependencies": {
