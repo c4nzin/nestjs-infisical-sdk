@@ -15,7 +15,10 @@ export function watchEnviromentFile(envFilePath: string = '.env'): void {
     ignoreInitial: true
   });
 
-  watcher.on('change', reloadEnviroment);
+  watcher.on('change', () => {
+    logger.log('Environment file changed.');
+    reloadEnviroment();
+  });
 
   watcher.on('error', (error: Error) => {
     logger.error('Error watching environment file', error);
