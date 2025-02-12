@@ -1,10 +1,11 @@
 import { InfisicalSDK } from '@infisical/sdk';
 import { InfisicalOptions } from 'src/interfaces/infisical-options.interface';
 import { watchEnviromentFile } from './file-watcher.util';
+import { ClientCredentialsNotFoundException } from '../exceptions';
 
 export async function createInfisicalClient(options: InfisicalOptions): Promise<InfisicalSDK> {
   if (!options.clientId || !options.clientSecret) {
-    throw new Error('clientId and clientSecret are required');
+    throw new ClientCredentialsNotFoundException();
   }
 
   const client = new InfisicalSDK({

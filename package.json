@@ -1,6 +1,6 @@
 {
   "name": "nestjs-infisical-sdk",
-  "version": "1.2.43",
+  "version": "1.2.47",
   "description": "A NestJS module for Infisical Node SDK",
   "author": "CANMERTINYO",
   "license": "MIT",

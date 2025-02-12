@@ -6,6 +6,7 @@ import { watchEnviromentFile } from '../../src/utils/file-watcher.util';
 import path from 'path';
 import fs from 'fs';
 import { Logger } from '@nestjs/common';
+import { ClientCredentialsNotFoundException } from '../../src/exceptions';
 
 jest.mock('@infisical/sdk', () => {
   class FakeInfisicalSDK {
@@ -147,7 +148,7 @@ describe('createInfisicalClient', () => {
       clientSecret: ''
     };
     await expect(createInfisicalClient(options)).rejects.toThrow(
-      'clientId and clientSecret are required'
+      ClientCredentialsNotFoundException
     );
   });
 });

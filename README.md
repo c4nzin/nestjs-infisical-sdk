@@ -35,7 +35,7 @@ INFISICAL_AWS_IAM_LOGIN=your-aws-iam-identity-id
 | `awsIamLogin`            | `string`  | The ID of your AWS IAM identity for authentication. _(Optional)_                                    |
 | `renewAwsIamToken`       | `boolean` | Whether to renew the AWS IAM authentication token that is currently set. _(Optional)_               |
 | `injectIntoProcessEnv`   | `boolean` | Determines fetched secrets should be injected into `process.env`. Defaults to `false`. _(Optional)_ |
-| `watchEnvFile`   | `boolean` | Automatically watches your `.env`. file, Default is: `false`. _(Optional)_ |
+| `watchEnvFile`           | `boolean` | Automatically watches your `.env`. file, Default is: `false`. _(Optional)_                          |
 
 ## Options
 
@@ -115,7 +115,7 @@ import { InfisicalModule } from 'nestjs-infisical-sdk';
       awsIamLogin: 'your-aws-iam-identity-id', // Optional
       renewAwsIamToken: true, // Optional,
       injectIntoProcessEnv: true, // Optional
-      enableFileWatcher: true //Optional
+      watchEnvFile: true //Optional
     })
   ]
 })
@@ -143,7 +143,7 @@ import { InfisicalModule } from 'nestjs-infisical-sdk';
         awsIamLogin: configService.get<string>('INFISICAL_AWS_IAM_LOGIN'), // Optional
         renewAwsIamToken: false, // Optional
         injectIntoProcessEnv: true, // Optional
-        enableFileWatcher: true //Optional
+        watchEnvFile: true //Optional
       }),
       inject: [ConfigService]
     })

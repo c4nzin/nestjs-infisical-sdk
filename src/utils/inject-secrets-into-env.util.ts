@@ -1,14 +1,13 @@
 import { InfisicalOptions } from 'src/interfaces/infisical-options.interface';
 import { InfisicalSDK } from '@infisical/sdk';
+import { ProjectIdNotFoundException } from '../exceptions';
 
 export async function injectSecretsIntoEnv(
   client: InfisicalSDK,
   options: InfisicalOptions
 ): Promise<void> {
   if (!options.projectId) {
-    throw new Error(
-      'Missing Project ID. Please specify a valid Project ID to enable secrets injection into process.env.'
-    );
+    throw new ProjectIdNotFoundException();
   }
 
   const secretsResult = await client.secrets().listSecrets({
