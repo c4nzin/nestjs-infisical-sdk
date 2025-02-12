@@ -23,15 +23,9 @@ importers:
       '@nestjs/platform-express':
         specifier: ^8.0.0
         version: 8.4.7(@nestjs/common@8.4.7(reflect-metadata@0.1.14)(rxjs@7.8.1))(@nestjs/core@8.4.7)
-      '@types/chokidar':
-        specifier: ^2.1.7
-        version: 2.1.7
       chokidar:
         specifier: ^4.0.3
         version: 4.0.3
-      dotenv:
-        specifier: ^10.0.0
-        version: 10.0.0
     devDependencies:
       '@babel/core':
         specifier: ^7.26.8
@@ -66,6 +60,12 @@ importers:
       '@nestjs/testing':
         specifier: ^8.4.7
         version: 8.4.7(@nestjs/common@8.4.7(reflect-metadata@0.1.14)(rxjs@7.8.1))(@nestjs/core@8.4.7(@nestjs/common@8.4.7(reflect-metadata@0.1.14)(rxjs@7.8.1))(@nestjs/platform-express@8.4.7)(reflect-metadata@0.1.14)(rxjs@7.8.1))(@nestjs/platform-express@8.4.7(@nestjs/common@8.4.7(reflect-metadata@0.1.14)(rxjs@7.8.1))(@nestjs/core@8.4.7))
+      '@types/chokidar':
+        specifier: ^2.1.7
+        version: 2.1.7
+      '@types/dotenv':
+        specifier: ^8.2.3
+        version: 8.2.3
       '@types/jest':
         specifier: ^27.5.2
         version: 27.5.2
@@ -84,6 +84,9 @@ importers:
       chai:
         specifier: ^5.1.2
         version: 5.1.2
+      dotenv:
+        specifier: ^10.0.0
+        version: 10.0.0
       eslint:
         specifier: ^7.0.0
         version: 7.32.0
@@ -1031,6 +1034,10 @@ packages:
   '@types/chokidar@2.1.7':
     resolution: {integrity: sha512-A7/MFHf6KF7peCzjEC1BBTF8jpmZTokb3vr/A0NxRGfwRLK3Ws+Hq6ugVn6cJIMfM6wkCak/aplWrxbTcu8oig==}
     deprecated: This is a stub types definition. chokidar provides its own type definitions, so you do not need this installed.
+
+  '@types/dotenv@8.2.3':
+    resolution: {integrity: sha512-g2FXjlDX/cYuc5CiQvyU/6kkbP1JtmGzh0obW50zD7OKeILVL0NSpPWLXVfqoAGQjom2/SLLx9zHq0KXvD6mbw==}
+    deprecated: This is a stub types definition. dotenv provides its own type definitions, so you do not need this installed.
 
   '@types/eslint-scope@3.7.7':
     resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}
@@ -4927,6 +4934,10 @@ snapshots:
   '@types/chokidar@2.1.7':
     dependencies:
       chokidar: 4.0.3
+
+  '@types/dotenv@8.2.3':
+    dependencies:
+      dotenv: 10.0.0
 
   '@types/eslint-scope@3.7.7':
     dependencies:

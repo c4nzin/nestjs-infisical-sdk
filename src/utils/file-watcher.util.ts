@@ -2,7 +2,7 @@ import { Logger } from '@nestjs/common';
 import chokidar from 'chokidar';
 import dotenv from 'dotenv';
 
-const logger = new Logger('InfisicalModule::FileWatcher');
+const logger = new Logger('InfisicalModule::FileAgent');
 
 function reloadEnviroment(): void {
   logger.log('Reloading environment variables...');

@@ -3,6 +3,10 @@ import { InfisicalOptions } from 'src/interfaces/infisical-options.interface';
 import { watchEnviromentFile } from './file-watcher.util';
 
 export async function createInfisicalClient(options: InfisicalOptions): Promise<InfisicalSDK> {
+  if (!options.clientId || !options.clientSecret) {
+    throw new Error('clientId and clientSecret are required');
+  }
+
   const client = new InfisicalSDK({
     siteUrl: options.siteUrl || process.env.INFISICAL_SITE_URL || 'https://app.infisical.com'
   });
