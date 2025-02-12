@@ -1,5 +1,6 @@
 import { InfisicalSDK } from '@infisical/sdk';
 import { InfisicalOptions } from 'src/interfaces/infisical-options.interface';
+import { watchEnviromentFile } from './file-watcher.util';
 
 export async function createInfisicalClient(options: InfisicalOptions): Promise<InfisicalSDK> {
   const client = new InfisicalSDK({
@@ -10,6 +11,10 @@ export async function createInfisicalClient(options: InfisicalOptions): Promise<
     clientId: options.clientId || process.env.INFISICAL_CLIENT_ID,
     clientSecret: options.clientSecret || process.env.INFISICAL_CLIENT_SECRET
   });
+
+  if (options.enableFileWatcher) {
+    watchEnviromentFile();
+  }
 
   if (options.renewToken) {
     await client.auth().universalAuth.renew();

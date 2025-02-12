@@ -9,7 +9,7 @@ function reloadEnviroment() {
   dotenv.config();
 }
 
-export function watchEnviromentFile(envFilePath: string = '../.env'): void {
+export function watchEnviromentFile(envFilePath: string = '.env'): void {
   const watcher = chokidar.watch(envFilePath, {
     persistent: true,
     ignoreInitial: true
