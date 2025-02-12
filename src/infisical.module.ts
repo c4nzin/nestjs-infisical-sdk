@@ -4,8 +4,17 @@ import { InfisicalOptions } from './interfaces/infisical-options.interface';
 import { INFISICAL_OPTIONS } from './constants';
 import { createInfisicalClient, injectSecretsIntoEnv } from './utils';
 import { ConfigModule } from '@nestjs/config';
+import { APP_FILTER } from '@nestjs/core';
+import { CustomExceptionFilter } from './core/exceptions/exception.filter';
 
-@Module({})
+@Module({
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: CustomExceptionFilter
+    }
+  ]
+})
 export class InfisicalModule {
   public static async register(options: InfisicalOptions): Promise<DynamicModule> {
     const client = await createInfisicalClient(options);
