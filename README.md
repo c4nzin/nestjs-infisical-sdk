@@ -28,6 +28,7 @@ INFISICAL_AWS_IAM_LOGIN=your-aws-iam-identity-id
 | ------------------------ | --------- | --------------------------------------------------------------------------------------------------- |
 | `clientId`               | `string`  | The client ID of your Machine Identity.                                                             |
 | `clientSecret`           | `string`  | The client secret of your Machine Identity.                                                         |
+| `projectId`              | `string`  | The project ID of your Infisical project. . _(Optional)_                                            |
 | `environment`            | `string`  | The environment in which to operate (e.g., "dev", "stg", "prod"). _(Optional)_                      |
 | `siteUrl`                | `string`  | The site URL for your Infisical instance. Defaults to `"https://app.infisical.com"`. _(Optional)_   |
 | `renewToken`             | `boolean` | Whether to renew the authentication token that is currently set. _(Optional)_                       |
@@ -35,7 +36,7 @@ INFISICAL_AWS_IAM_LOGIN=your-aws-iam-identity-id
 | `awsIamLogin`            | `string`  | The ID of your AWS IAM identity for authentication. _(Optional)_                                    |
 | `renewAwsIamToken`       | `boolean` | Whether to renew the AWS IAM authentication token that is currently set. _(Optional)_               |
 | `injectIntoProcessEnv`   | `boolean` | Determines fetched secrets should be injected into `process.env`. Defaults to `false`. _(Optional)_ |
-| `watchEnvFile`           | `boolean` | Automatically watches your `.env`. file, Default is: `false`. _(Optional)_                          |
+| `watchEnvFile`           | `boolean` | Automatically watches your `.env`. file, Default is: `false`. _(Optional)_                          | 
 
 ## Options
 
@@ -50,6 +51,12 @@ interface InfisicalOptions {
    * The client secret of your Machine Identity.
    */
   clientSecret: string;
+
+  /**
+   * The project ID of your Infisical project.
+   * Used to fetch secrets from the correct project and inject them into `process.env`.
+   */
+  projectId?: string;
 
   /**
    * The environment in which to operate (e.g., "dev", "stg", "prod").
