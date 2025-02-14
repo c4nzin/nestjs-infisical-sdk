@@ -7,6 +7,8 @@ on:
   pull_request:
     branches:
       - main
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   build:
@@ -28,7 +30,44 @@ jobs:
         run: pnpm install
 
       - name: Run tests
-        run: pnpm test  --forceExit
+        run: pnpm test --forceExit
 
       - name: Build project
         run: pnpm run build
+
+  check-dependencies:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.12'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Check for outdated dependencies
+        run: pnpm outdated > outdated.txt
+
+      - name: Create issue if dependencies are outdated
+        id: create_issue
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const fs = require('fs');
+            const outdated = fs.readFileSync('outdated.txt', 'utf8');
+            if (outdated.trim()) {
+              github.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: 'Outdated Dependencies Found',
+                body: `The following dependencies are outdated:\n\n\`\`\`\n${outdated}\n\`\`\``,
+              });
+            }
