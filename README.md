@@ -1,8 +1,11 @@
-![infisical](https://github.com/user-attachments/assets/28e5832d-5212-4568-9f90-3b05ca49249a)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/fe2a0806-fbf0-4540-b5ae-ae18fdc06391" alt="image"  width=400px />
+</p>
 
-# NestJS Infisical SDK
+</br>
 
-This project provides a NestJS module for integrating with the Infisical SDK, allowing users to manage secrets easily within their applications.
+
+This library uses the official Infisical SDK. What we’ve done is make the integration with NestJS easier, making your life a lot simpler. Pretty awesome, right? It’s written in pure TypeScript, and we’ve fully utilized type safety. you can easily inject the Infisical SDK.
 
 NOTE: This is not a official library!
 
@@ -10,9 +13,26 @@ NOTE: This is not a official library!
 
 To install the package, run:
 
+### With npm
 ```bash
 npm install nestjs-infisical-sdk
 ```
+
+### With yarn
+```bash
+yarn add nestjs-infisical-sdk
+```
+
+### With pnpm
+```bash
+pnpm install nestjs-infisical-sdk
+```
+
+### With bun (Not tested yet!)
+```bash
+bun add nestjs-infisical-sdk
+```
+
 
 ## Example .env
 
@@ -273,3 +293,11 @@ export class AppService {
 
 Looking for a working example?
 [NestJS Infisical Example](https://github.com/c4nzin/nestjs-infisical-example)
+
+
+## Contribute
+
+We welcome contributions! Feel free to open an issue or submit a pull request.
+
+For more details, visit the [GitHub repository](https://github.com/c4nzin/nestjs-infisical-sdk).
+
