@@ -4,8 +4,7 @@
 
 </br>
 
-
-This library uses the official Infisical SDK. What we’ve done is make the integration with NestJS easier, making your life a lot simpler. Pretty awesome, right? It’s written in pure TypeScript, and we’ve fully utilized type safety. you can easily inject the Infisical SDK.
+This library uses the official Infisical SDK. What we’ve done is make the integration with NestJS easier, making your life a lot simpler, It’s written in pure TypeScript, and we’ve fully utilized type safety. you can easily inject the Infisical SDK as a service.
 
 NOTE: This is not a official library!
 
@@ -14,25 +13,28 @@ NOTE: This is not a official library!
 To install the package, run:
 
 ### With npm
+
 ```bash
 npm install nestjs-infisical-sdk
 ```
 
 ### With yarn
+
 ```bash
 yarn add nestjs-infisical-sdk
 ```
 
 ### With pnpm
+
 ```bash
 pnpm install nestjs-infisical-sdk
 ```
 
 ### With bun (Not tested yet!)
+
 ```bash
 bun add nestjs-infisical-sdk
 ```
-
 
 ## Example .env
 
@@ -56,7 +58,7 @@ INFISICAL_AWS_IAM_LOGIN=your-aws-iam-identity-id
 | `awsIamLogin`            | `string`  | The ID of your AWS IAM identity for authentication. _(Optional)_                                    |
 | `renewAwsIamToken`       | `boolean` | Whether to renew the AWS IAM authentication token that is currently set. _(Optional)_               |
 | `injectIntoProcessEnv`   | `boolean` | Determines fetched secrets should be injected into `process.env`. Defaults to `false`. _(Optional)_ |
-| `watchEnvFile`           | `boolean` | Automatically watches your `.env`. file, Default is: `false`. _(Optional)_                          | 
+| `watchEnvFile`           | `boolean` | Automatically watches your `.env`. file, Default is: `false`. _(Optional)_                          |
 
 ## Options
 
@@ -190,7 +192,7 @@ import {
   DeleteSecretResult,
   DynamicSecretProviders,
   GetSecretResult,
-  InfisicalSDK,
+  InfisicalService,
   InjectInfisical,
   ListSecretsResult,
   UpdateSecretResult
@@ -200,11 +202,11 @@ import {
 export class AppService {
   private readonly logger = new Logger(AppService.name);
 
-  constructor(@InjectInfisical() private readonly infisicalSdk: InfisicalSDK) {}
+  constructor(@InjectInfisical() private readonly infiscalService: InfisicalService) {}
 
   public async getSecret(secretName: string): Promise<GetSecretResult> {
     this.logger.log(`Getting secret: ${secretName}`);
-    const secretResponse = await this.infisicalSdk.secrets().getSecret({
+    const secretResponse = await this.infiscalService.secrets().getSecret({
       environment: 'dev',
       secretName,
       projectId: process.env.INFISICAL_PROJECT_ID
@@ -215,7 +217,7 @@ export class AppService {
 
   public async createSecret(secretName: string, secretValue: string): Promise<CreateSecretResult> {
     this.logger.log(`Creating secret: ${secretName}`);
-    const secret = await this.infisicalSdk.secrets().createSecret(secretName, {
+    const secret = await this.infiscalService.secrets().createSecret(secretName, {
       environment: 'dev',
       secretValue,
       projectId: process.env.INFISICAL_PROJECT_ID
@@ -226,7 +228,7 @@ export class AppService {
 
   public async updateSecret(secretName: string, secretValue: string): Promise<UpdateSecretResult> {
     this.logger.log(`Updating secret: ${secretName}`);
-    const secret = await this.infisicalSdk.secrets().updateSecret(secretName, {
+    const secret = await this.infiscalService.secrets().updateSecret(secretName, {
       environment: 'dev',
       secretValue,
       projectId: process.env.INFISICAL_PROJECT_ID
@@ -237,7 +239,7 @@ export class AppService {
 
   public async deleteSecret(secretName: string): Promise<DeleteSecretResult> {
     this.logger.log(`Deleting secret: ${secretName}`);
-    const secret = await this.infisicalSdk.secrets().deleteSecret(secretName, {
+    const secret = await this.infiscalService.secrets().deleteSecret(secretName, {
       environment: 'dev',
       projectId: process.env.INFISICAL_PROJECT_ID
     });
@@ -247,7 +249,7 @@ export class AppService {
 
   public async listSecrets(): Promise<ListSecretsResult> {
     this.logger.log('Listing secrets');
-    const secrets = await this.infisicalSdk.secrets().listSecrets({
+    const secrets = await this.infiscalService.secrets().listSecrets({
       environment: 'dev',
       projectId: process.env.INFISICAL_PROJECT_ID
     });
@@ -256,7 +258,7 @@ export class AppService {
   }
 
   public async createDynamicSecret(): Promise<CreateDynamicSecretResult> {
-    const createDynamicSecret = await this.infisicalSdk.dynamicSecrets().create({
+    const createDynamicSecret = await this.infiscalService.dynamicSecrets().create({
       provider: {
         type: DynamicSecretProviders.Redis,
         inputs: {
@@ -279,10 +281,12 @@ export class AppService {
   }
 
   public async deleteDynamicSecret(dynamicSecretName: string): Promise<DeleteDynamicSecretResult> {
-    const deleteDynamicSecret = await this.infisicalSdk.dynamicSecrets().delete(dynamicSecretName, {
-      environmentSlug: 'dev',
-      projectSlug: 'project-slug'
-    });
+    const deleteDynamicSecret = await this.infiscalService
+      .dynamicSecrets()
+      .delete(dynamicSecretName, {
+        environmentSlug: 'dev',
+        projectSlug: 'project-slug'
+      });
 
     return deleteDynamicSecret;
   }
@@ -294,10 +298,8 @@ export class AppService {
 Looking for a working example?
 [NestJS Infisical Example](https://github.com/c4nzin/nestjs-infisical-example)
 
-
 ## Contribute
 
 We welcome contributions! Feel free to open an issue or submit a pull request.
 
 For more details, visit the [GitHub repository](https://github.com/c4nzin/nestjs-infisical-sdk).
-
