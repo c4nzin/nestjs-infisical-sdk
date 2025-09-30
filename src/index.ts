@@ -59,5 +59,7 @@ export {
   KmsListSigningAlgorithmsOptions,
   KmsListSigningAlgorithmsResponse,
   KmsGetPublicKeyOptions,
-  KmsGetPublicKeyResponse
+  KmsGetPublicKeyResponse,
+  DeleteDynamicSecretResponse,
+  CreateDynamicSecretResponse
 } from '@infisical/sdk';
