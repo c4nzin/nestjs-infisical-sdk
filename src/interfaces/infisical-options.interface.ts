@@ -68,4 +68,29 @@ export interface InfisicalOptions {
    * Default is ".env".
    */
   watchEnvFile?: boolean;
+
+  /**
+   *(bool, optional) whether to expand secret references.
+   * Default is is true
+   */
+
+  expandSecretReferences?: boolean;
+
+  /**
+   * (bool, optional) Whether or not to reveal the secret value of the secrets. If set to "false", the secretValue is masked with <hidden-by-infisical>.
+   * Default is true
+   */
+  viewSecretValue?: boolean;
+
+  /**
+   * (bool, optional): Whether to list secrets recursively.
+   * Default is false
+   */
+  recursive?: boolean;
+
+  /**
+   *  (bool, optional): Whether to include imported secrets.
+   * Default is false
+   */
+  includeImports?: boolean;
 }

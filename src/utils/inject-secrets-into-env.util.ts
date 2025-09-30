@@ -13,8 +13,11 @@ export async function injectSecretsIntoEnv(
   const secretsResult = await client.secrets().listSecrets({
     environment: options.environment || 'dev',
     projectId: options.projectId,
-    includeImports: true,
-    secretPath: options.secretPath || '/'
+    secretPath: options.secretPath || '/',
+    expandSecretReferences: options.expandSecretReferences ?? true,
+    viewSecretValue: options.viewSecretValue ?? true,
+    recursive: options.recursive ?? false,
+    includeImports: options.includeImports ?? false
   });
 
   const secrets = secretsResult?.secrets || [];

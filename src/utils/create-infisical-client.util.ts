@@ -34,7 +34,6 @@ export async function createInfisicalClient(options: InfisicalOptions): Promise<
       identityId: options.awsIamLogin || process.env.INFISICAL_AWS_IAM_LOGIN
     });
   }
-
   if (options.renewAwsIamToken) {
     await client.auth().awsIamAuth.renew();
   }
